@@ -1,0 +1,10 @@
+<!--s'appel avec http://localhost/~jdemontigny/explorateur.html-->
+<html>
+	<head>
+		<frameset cols="18%,*">
+			<frame src="http://localhost/~jdemontigny/cgi-bin/projet/liste.cgi?rep=/auto_home/jdemontigny/test/" scrolling='AUTO'/>
+			<!-- creation d'un scrolling auto dans le cas ou le nombre de dossier est trop important, ou nom des dossiers trop long pour la largeur de la fenetre --> 
+			<frame src="http://localhost/~jdemontigny/cgi-bin/projet/contenu.cgi?rep=/auto_home/jdemontigny/test/" name='droite' scrolling='AUTO'/>
+		</frameset>
+	</head>
+</html>

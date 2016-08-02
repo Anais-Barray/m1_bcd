@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SeqSet>
+  <sequence accNum="BC074923" provenance="GENBANK">
+    <organism>Homo sapiens</organism>
+    <geneName>SRY</geneName>
+    <biomol>MRNA</biomol>
+    <seqNuc>cacctttcaattttgtcgca</seqNuc>
+  </sequence>
+</SeqSet>
+

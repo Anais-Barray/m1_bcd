@@ -1,0 +1,176 @@
+//Correction examen 2014 session 1
+// Anna Delest, relecture et compléments par Marianne Huchard
+
+//Question 1
+public interface IAlveole {
+	double getDiametre();
+	double getProfondeur();
+	double volume();
+}
+public interface IAlveoleBiodegradable extends IAlveole {
+	double getTimeDegradation();
+}
+
+//Question 2 (les méthodes get ne sont pas demandées explicitement dans l'énoncé.
+// cependant il faut les écrire pour respecter le fait que l'on implémente
+// l'interface)
+public class Alveole implements IAlveole {
+	private double diametre, profondeur;
+	
+	public Alveole(double diametre, double profondeur) {
+		this.diametre = diametre;
+		this.profondeur = profondeur;
+	}
+
+	public double getDiametre() {
+		return this.diametre;
+	}
+	
+	public double getProfondeur() {
+		return this.profondeur;
+	}
+	
+	public double volume() {
+		return  3.14*(this.getDiametre()/2)*(this.getDiametre()/2)
+			*this.getProfondeur();	
+	
+	}
+}
+
+//Question 3 
+public class AlveoleBiodegradable extends Alveole implements IAlveoleBiodegradable {
+	private double timeDegradation;
+
+	public AlveoleBiodegradable(double diametre, double profondeur, 
+	double timeDegradation) {
+		super(diametre, profondeur);
+		this.timeDegradation = timeDegradation;
+	}
+	
+	public double getTimeDegradation() {
+		return timeDegradation;
+	}
+}
+
+//Question 4
+I1 compile et s'exécute
+I2 aussi (on a spécialisé le type de la collection, mais on n'a pas changé le type 
+du paramètre de généricité (voir correction session 1)
+I3 ne compile pas : on a spécialisé le paramètre de généricité et une méthode de 
+Vector<Alveole> telle que add(Alveole a) pourrait mal s'appliquer à un 
+Vector<AlveoleBiodegradable> car on risquerait de passer en paramètre quelque chose 
+qui n'est pas une AlveoleBiodegradable. Donc ce n'est pas autorisé.
+
+//Question 5 
+public class DiametreIncorrectException extends Exception {
+	private double diametreError ;
+
+	public DiametreIncorrectException(String message,double diametreError) {
+		super(message); this.diametreError=diametreError;
+			
+	}
+}
+
+//Question 6
+//Quand on dit : "On souhaite que ces exceptions soient verifies 
+// (au sens du mecanisme de gestion des exceptions en Java"
+// cela implique que la classe DiametreIncorrectException doit être sous-classe de Exception
+// mais pas sous-classe de RuntimeException ou Error cf. diapo 40 cours arbres de décision
+// binaires
+// "vérifiée" veut dire qu'il faudra la déclarer à la fin de l'entête de la méthode
+// par throws DiametreIncorrectException (fait ci-dessous)
+
+//Dans alveole
+public void setDiametre(Double d) throws DiametreIncorrectException{
+		if (d<4 || d>10) 
+			throw new DiametreIncorrectException("diametre incorrect", this.getDiametre());
+		this.diametre = d;
+	}
+
+// on modifie le constructeur pour appeler cet accesseur qui vérifie le diamètre
+public Alveole(double diametre, double profondeur) throws DiametreIncorrectException {
+		this.setDiametre(diametre);
+		this.profondeur = profondeur;
+	}
+
+//Dans Alveole Biodegradable
+public AlveoleBiodegradable(double diametre, double profondeur, double timeDegradation) 
+throws DiametreIncorrectException{
+//le constructeur de cette classe demande l'exception. 
+// Plus loin dans le main elle sera alors 
+// egalement demandée
+		super(diametre, profondeur);
+		this.timeDegradation = timeDegradation;
+	}
+
+//Question 7 
+public class PlaqueAlveolee <Tc extends IAlveole> {
+	private Tc [][] plaque;
+
+	public PlaqueAlveolee(Tc[][] plaque) {
+		this.plaque = plaque;
+	}
+}
+
+//Question 8
+	public int nombreAlveoles(){
+		if (plaque == null)
+			return 0;
+		else 
+			return plaque[0].length * plaque.length;
+	}
+	public double volume(){
+		if (plaque == null) return 0;
+		return nombreAlveoles() * plaque[0][0].volume();
+	}
+
+//Question 9 
+public class PlaqueAlveolee<Tc extends IAlveole> implements Iterable<IAlveole>{
+	@Override
+	public Iterator<IAlveole> iterator() {
+		return new IterateurPlaqueAlveolee(plaque);
+	}
+}
+
+public class IterateurPlaqueAlveolee implements Iterator<IAlveole> {
+	private IAlveole[][] plaque;
+	int i=0, j=0;
+	
+	public IterateurPlaqueAlveolee(){}
+	public IterateurPlaqueAlveolee(IAlveole[][] plaque){this.plaque=plaque;}
+	
+	@Override
+	public boolean hasNext() {
+		if (plaque==null) return false;
+		return( i<plaque.length);
+	}
+
+	@Override
+	public IAlveole next() {
+		int ic = i;
+		int jc = j;
+		if (j < plaque[0].length - 1) j++; 
+		else 
+			{ j=0; i++;}
+		return plaque[ic][jc];
+	}
+
+	@Override
+	public void remove() {
+		throw new UnsupportedOperationException();
+	}
+}
+
+//Question 10
+public static void main(String[] args) throws DiametreIncorrectException {
+// exception demandé par la classe AlveoleBiodegradable
+		AlveoleBiodegradable[][] plaqueBio = new AlveoleBiodegradable[3][4];
+		//Tc remplacé par le type AlveoleBiodegradable
+		for (int i=0; i<plaqueBio.length; i++)
+			for (int j=0; j<plaqueBio[0].length; j++)	
+				plaqueBio[i][j] = new AlveoleBiodegradable();
+		
+		PlaqueAlveolee<AlveoleBiodegradable> p = new 	
+				PlaqueAlveolee<AlveoleBiodegradable>(plaqueBio);
+		//impossible d'ecrire cette ligne si je n'ajoute pas l'exception 
+

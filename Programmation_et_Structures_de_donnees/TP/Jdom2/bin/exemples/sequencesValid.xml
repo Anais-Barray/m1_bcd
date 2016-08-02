@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Seq_Set SYSTEM "sequence.dtd">
+
+<Seq_Set>
+  <Sequence num="1">hs1</Sequence>
+  <Sequence num="2">hs2</Sequence>
+  <Sequence num="3">hs3</Sequence>
+  <Sequence num="4">hs4</Sequence>
+  <Sequence num="5">hs5</Sequence>
+  <Sequence num="6">hs6</Sequence>
+  <Sequence num="7">hs7</Sequence>
+  <Sequence num="8">hs8</Sequence>
+  <Sequence num="9">hs9</Sequence>
+  <Sequence num="10">hs10</Sequence>
+  <Sequence num="11">hs11</Sequence>
+  <Sequence num="12">hs12</Sequence>
+  <Sequence num="13">hs13</Sequence>
+  <Sequence num="14">hs14</Sequence>
+  <Sequence num="15">hs15</Sequence>
+  <Sequence num="16">hs16</Sequence>
+  <Sequence num="17">hs17</Sequence>
+  <Sequence num="18">hs18</Sequence>
+  <Sequence num="19">hs19</Sequence>
+  <Sequence num="20">hs20</Sequence>
+  <Sequence num="21">hs21</Sequence>
+  <Sequence num="22">hs22</Sequence>
+  <Sequence num="23">hs23</Sequence>
+  <Sequence num="24">hs24</Sequence>
+  <Sequence num="25">hs25</Sequence>
+</Seq_Set>
+

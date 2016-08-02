@@ -1,0 +1,33 @@
+</style>
+	<script type="text/javascript">
+		function showHide(id) {
+			var obj=['ShowHide','hideBtn','showBtn'];
+			for (var i = 0 ; i < obj.length ; i++) {
+				var e = document.getElementById(obj[i]+id);
+				var v = window.getComputedStyle(e, null).getPropertyValue('display');
+				if (e) {
+					if (v != 'none') {
+						e.style.display = 'none';
+					} else {
+						e.style.display = (obj == 'ShowHide' ? 'block' : 'inline');
+					}
+				}
+			}
+		}
+</script>
+
+
+
+
+</style>
+	<script type="text/javascript">
+		function gereDossier(id_image){
+                	var cible=document.getElementById("div"+id_image);
+                	if (cible.style.display=="block"){
+                    		document.getElementById("div"+id_image).style.display="none";
+                    	}
+               		else {
+                   		document.getElementById("div"+id_image).style.display="block";
+                   	}    
+               	}
+</script>
